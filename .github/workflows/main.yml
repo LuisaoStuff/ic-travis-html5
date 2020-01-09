@@ -1,0 +1,23 @@
+name: surge
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Instalar validador
+      run: |
+        apt install python3-pip
+        pip install html5validator
+    - name: Validar html
+      run: html5validator --root _build/
+    - name: Install surge and fire deployment
+      uses: actions/setup-node@v1
+      with:
+        node-version: 8
+    - run: npm install -g surge
+    - run: surge ./ ${{ secrets.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
