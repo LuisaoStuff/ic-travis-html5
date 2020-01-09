@@ -11,10 +11,10 @@ jobs:
     - uses: actions/checkout@v1
     - name: Instalar validador
       run: |
-        apt install python3-pip
+        sudo apt install python3-pip
         pip install html5validator
     - name: Validar html
-      run: html5validator --root _build/
+      run: /home/$USER/.local/bin/html5validator --root _build/
     - name: Install surge and fire deployment
       uses: actions/setup-node@v1
       with:
